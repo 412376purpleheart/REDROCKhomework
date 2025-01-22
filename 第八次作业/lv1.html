@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        async function getWeather() {
+            const url = "https://api.openweathermap.org/data/2.5/weather?q=$Chongqing&appid=$6e3bbaddbe7e22a2c116020cbc388ce5&units=metric&lang=zh_cn";
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error("HTTP error! status: ${response.status}");
+                }
+                const data = await response.json();
+                const temperature = data.main.temp;
+                const weather = data.weather[0].description;
+                console.log("重庆的温度是: ${temperature}°C");
+                console.log("重庆的天气是: ${weather}");
+            } catch (error) {
+                console.error("获取天气信息时出错: ", error);
+            }
+        }
+        getWeather();
+    </script>
+</body>
+
+</html>
