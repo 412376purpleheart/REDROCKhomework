@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        async function createGitHubRepo() {
+            const url = "https://api.github.com/user/repos";
+            const token = "token";//PAT上传不了说是敏感信息
+            const repoName = "MyProject";
+            const bodyData = {
+                "name": repoName,
+                "description": "这是一个新创建的项目仓库",
+                "private": false,
+                "auto_init": false
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer token",//PAT上传不了说是敏感信息
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(bodyData)
+                });
+                if (!response.ok) {
+                    throw new Error("HTTP error! status: ${response.status}");
+                }
+                const data = await response.json();
+                console.log("仓库创建成功:", data);
+            } catch (error) {
+                console.error("创建仓库时出错: ", error);
+            }
+        }
+        createGitHubRepo();
+    </script>
+</body>
+
+</html>
